@@ -61,10 +61,16 @@ public:
         {
             CrossAOINode tmp = *nextNode;
 
-            if (preNode == nullptr)
-                nextNode->pre = nullptr;
-            else
-                nextNode->pre = preNode;
+			if (preNode == nullptr)
+			{
+				nextNode->pre = nullptr;
+				x_head_ = nextNode;
+			}
+			else
+			{
+				nextNode->pre = preNode;
+				preNode->next = nextNode;
+			}
 
             nextNode->next = node;
             node->pre = nextNode;
@@ -79,12 +85,50 @@ public:
                 node->next = tmp.next;
                 node->next->pre = node;
             }
+
+			nextNode = node->next;
+			preNode = node->pre;
         }
     }
 
     void remove(CrossAOINode* node)
     {
+		CrossAOINode* currentNode = x_head_;
+		while (currentNode != nullptr)
+		{
+			if (node == currentNode)
+			{
+				if (currentNode->pre == nullptr)
+				{
+					if (currentNode->next == nullptr)
+					{
+						x_head_ = nullptr;
+					}
+					else
+					{
+						x_head_ = currentNode->next;
+						x_head_->pre = nullptr;
+					}
+				}
+				else
+				{
+					if (currentNode->next == nullptr)
+					{
+						currentNode->pre->next = nullptr;
+						x_tail_ = currentNode->pre;
+					}
+					else
+					{
+						currentNode->pre->next = currentNode->next;
+						currentNode->next->pre = currentNode->pre;
+					}
+				}
 
+				break;
+			}
+
+			currentNode = currentNode->next;
+		}
     }
 private:
     CrossAOINode* x_head_;
