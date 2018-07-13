@@ -13,6 +13,7 @@ const int OBJECT_POOL_INIT_SIZE = 64;
 template <typename T>
 class ObjectPool : public std::enable_shared_from_this<ObjectPool<T> >
 {
+public:
     class PoolObjectDeleter
     {
     public:
@@ -52,6 +53,11 @@ public:
         return objs_.size();
     }
 
+    size_t all() const
+    {
+        return all_;
+    }
+
     bool empty() const
     {
         return objs_.empty();
@@ -82,11 +88,13 @@ private:
         for (int i = 0; i != size; ++i)
         {
             objs_.push(std::unique_ptr<T>(new T()));
+            all_++;
         }
     }
 
 private:
     std::stack<std::unique_ptr<T> > objs_;
+    size_t all_ = 0;
 };
 
 

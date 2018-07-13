@@ -1,36 +1,38 @@
 #include <iostream>
+#include <chrono>
 
 #include "AOI/CrossAOIServer.h"
-
 #include "Common/ObjectPool.h"
-#include "Common/Singleton.h"
 
-#include <memory>
+#include <vector>
 
 int main()
 {
-	while(true)
-	{
-		auto pool = std::make_shared<ObjectPool<CrossAOINode>>();
+    CrossAOIServer aoi;
 
-		auto node = pool->acquire();
-		auto node2 = pool->acquire();
-		auto node3 = pool->acquire();
+    auto pool = std::make_shared<ObjectPool<CrossAOINode>>();
 
-		node->x(2.3);
-		node2->x(3.3);
-		node3->x(3.5);
+    std::vector<std::shared_ptr<CrossAOINode>> nodes;
 
-		CrossAOIServer aoi;
+    auto start = std::chrono::steady_clock::now();
 
-		aoi.insert(node.get());
-		aoi.insert(node2.get());
-		aoi.insert(node3.get());
+    for (int i = 0; i != 100000; ++i)
+    {
+        std::shared_ptr<CrossAOINode> node = pool->acquire();
 
-		aoi.remove(node2.get());
+        node->x((float)rand());
 
-		std::cout << pool->size() << std::endl;
-	}
+        aoi.insert(node.get());
+
+        nodes.push_back(node);
+    }
+
+    std::cout << pool->size() << std::endl;
+    std::cout << pool->all() << std::endl;
+
+    auto end = std::chrono::steady_clock::now();
+
+    std::cout << std::chrono::duration_cast<std::chrono::microseconds>(end - start).count() << std::endl;
 
     return 0;
 }

@@ -57,38 +57,19 @@ public:
         CrossAOINode* nextNode = node->next;
         CrossAOINode* preNode = node->pre;
 
+		//向尾部移动
         while(nextNode && (node->x() > nextNode->x()))
         {
-            CrossAOINode tmp = *nextNode;
-
-			if (preNode == nullptr)
-			{
-				nextNode->pre = nullptr;
-				x_head_ = nextNode;
-			}
-			else
-			{
-				nextNode->pre = preNode;
-				preNode->next = nextNode;
-			}
-
-            nextNode->next = node;
-            node->pre = nextNode;
-
-            if (tmp.next == nullptr)
-            {
-                node->next = nullptr;
-                x_tail_ = node;
-            }
-            else
-            {
-                node->next = tmp.next;
-                node->next->pre = node;
-            }
-
+			move(node, false);
 			nextNode = node->next;
-			preNode = node->pre;
         }
+
+		//向头部移动
+		while(preNode && (node->x() < preNode->x()))
+		{
+			move(node, true);
+			preNode = node->pre;
+		}
     }
 
     void remove(CrossAOINode* node)
@@ -130,6 +111,80 @@ public:
 			currentNode = currentNode->next;
 		}
     }
+
+private:
+	void move(CrossAOINode* node, bool toHead)
+	{
+		if (!node)
+			return;
+
+		CrossAOINode* nextNode = node->next;
+        CrossAOINode* preNode = node->pre;
+
+		if (!nextNode && !toHead)
+			return;
+
+		if (!preNode && toHead)
+			return;
+
+		if (toHead)
+		{
+			CrossAOINode tmp = *node;
+			if (preNode->pre == nullptr)
+			{
+				node->pre = nullptr;
+				x_head_ = node;
+			}
+			else
+			{
+				node->pre = preNode->pre;
+				preNode->pre->next = node;
+			}
+
+			node->next = preNode;
+			preNode->pre = node;
+
+			if (tmp.next == nullptr)
+			{
+				preNode->next = nullptr;
+				x_tail_ = preNode;
+			}
+			else
+			{
+				preNode->next = tmp.next;
+				preNode->next->pre = preNode;
+			}
+		}
+		else
+		{
+			CrossAOINode tmp = *nextNode;
+
+			if (preNode == nullptr)
+			{
+				nextNode->pre = nullptr;
+				x_head_ = nextNode;
+			}
+			else
+			{
+				nextNode->pre = preNode;
+				preNode->next = nextNode;
+			}
+
+            nextNode->next = node;
+            node->pre = nextNode;
+
+            if (tmp.next == nullptr)
+            {
+                node->next = nullptr;
+                x_tail_ = node;
+            }
+            else
+            {
+                node->next = tmp.next;
+                node->next->pre = node;
+            }
+		}
+	}
 private:
     CrossAOINode* x_head_;
     CrossAOINode* x_tail_;
