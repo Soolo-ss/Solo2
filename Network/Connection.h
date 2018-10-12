@@ -7,27 +7,31 @@
 
 #include <boost/asio.hpp>
 
+#include <iostream>
+
 using boost::asio::ip::tcp;
 
-class Connection : public std::enable_shared_from_this<Connection>
+namespace Solo::Network
 {
-public:
-    using ConnectionPtr = std::shared_ptr<Connection>;
-
-    Connection(tcp::socket socket)
-        : socket_(std::move(socket))
+    class Connection : public std::enable_shared_from_this<Connection>
     {
-        onAccept();
-    }
+    public:
+        using ConnectionPtr = std::shared_ptr<Connection>;
 
-    void onAccept()
-    {
+        Connection(tcp::socket&& socket);
 
-    }
+        void onAccept()
+        {
+            std::cout << "Connection::onAccept" << std::endl;
+        }
 
-private:
-    tcp::socket socket_;
-};
+        void doHeartBeat();
+
+    private:
+        tcp::socket socket_;
+    };
+}
+
 
 
 #endif //SOLO_CONNECTION_H

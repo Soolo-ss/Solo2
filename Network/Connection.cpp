@@ -3,3 +3,11 @@
 //
 
 #include "Connection.h"
+
+using namespace Solo::Network;
+
+Connection::Connection(tcp::socket&& socket)
+    : socket_(std::move(socket))
+{
+    onAccept();
+}

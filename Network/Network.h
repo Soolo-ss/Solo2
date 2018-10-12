@@ -18,10 +18,11 @@ namespace Solo::Network
     class Network
     {
     public:
-        Network()
-            : acceptor_(service_),
+        Network(tcp::endpoint point)
+            : acceptor_(service_, point),
               socket_(service_),
-              newConnectionID_(0)
+              newConnectionID_(0),
+              endpoint_(point)
         { }
 
         void Start();
@@ -32,6 +33,7 @@ namespace Solo::Network
         boost::asio::io_service service_;
         tcp::acceptor acceptor_;
         tcp::socket socket_;
+        tcp::endpoint endpoint_;
 
         uint64_t newConnectionID_;
         std::unordered_map<uint64_t, Connection::ConnectionPtr> connections_;
