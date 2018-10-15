@@ -6,6 +6,14 @@
 
 using namespace Solo::Network;
 
+Network::Network(tcp::endpoint point)
+    : service_(),
+      acceptor_(service_, point),
+      socket_(service_),
+      endpoint_(point),
+      connectionManager_()
+{ }
+
 void Network::Start() {
     DoAccept();
 
@@ -14,15 +22,11 @@ void Network::Start() {
 
 void Network::DoAccept() {
     acceptor_.async_accept(socket_, [this](boost::system::error_code ec) {
-        if (!ec)
-        {
+        if (!ec) {
             auto newConnection = std::make_shared<Connection>(std::move(socket_));
-            newConnectionID_++;
 
-            connections_[newConnectionID_] = newConnection;
-        }
-        else
-        {
+            connectionManager_.Start(newConnection);
+        } else {
             abort();
         }
 

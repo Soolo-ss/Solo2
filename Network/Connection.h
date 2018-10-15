@@ -20,15 +20,17 @@ namespace Solo::Network
 
         Connection(tcp::socket&& socket);
 
-        void onAccept()
-        {
-            std::cout << "Connection::onAccept" << std::endl;
-        }
+        void Start();
 
-        void doHeartBeat();
+        void Stop();
+
+    private:
+        void DoRead();
 
     private:
         tcp::socket socket_;
+
+        std::vector<char, 8192> buffer_;
     };
 }
 

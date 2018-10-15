@@ -5,11 +5,11 @@
 #ifndef SOLO_NETWORK_H
 #define SOLO_NETWORK_H
 
-#include <boost/asio.hpp>
+#include "Connection.h"
+#include "ConnectionManager.h"
 
 #include <unordered_map>
-
-#include "Connection.h"
+#include <boost/asio.hpp>
 
 using boost::asio::ip::tcp;
 
@@ -18,12 +18,7 @@ namespace Solo::Network
     class Network
     {
     public:
-        Network(tcp::endpoint point)
-            : acceptor_(service_, point),
-              socket_(service_),
-              newConnectionID_(0),
-              endpoint_(point)
-        { }
+        Network(tcp::endpoint point);
 
         void Start();
 
@@ -35,8 +30,7 @@ namespace Solo::Network
         tcp::socket socket_;
         tcp::endpoint endpoint_;
 
-        uint64_t newConnectionID_;
-        std::unordered_map<uint64_t, Connection::ConnectionPtr> connections_;
+        ConnectionManager connectionManager_;
     };
 }
 
