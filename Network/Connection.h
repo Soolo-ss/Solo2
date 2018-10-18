@@ -11,7 +11,7 @@
 
 using boost::asio::ip::tcp;
 
-namespace Solo::Network
+namespace Solo
 {
     class Connection : public std::enable_shared_from_this<Connection>
     {
@@ -30,7 +30,7 @@ namespace Solo::Network
     private:
         tcp::socket socket_;
 
-        std::vector<char, 8192> buffer_;
+        std::vector<char> buffer_;
     };
 }
 

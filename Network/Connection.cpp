@@ -4,7 +4,7 @@
 
 #include "Connection.h"
 
-using namespace Solo::Network;
+using namespace Solo;
 
 Connection::Connection(tcp::socket&& socket)
     : socket_(std::move(socket))
@@ -18,6 +18,6 @@ void Connection::Stop() {
 
 }
 
-void DoRead() {
+void Connection::DoRead() {
 
 }

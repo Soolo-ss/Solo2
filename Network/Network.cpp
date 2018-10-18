@@ -4,7 +4,7 @@
 
 #include "Network.h"
 
-using namespace Solo::Network;
+using namespace Solo;
 
 Network::Network(tcp::endpoint point)
     : service_(),

@@ -6,7 +6,7 @@
 
 #include <iostream>
 
-using namespace Solo::Network;
+using namespace Solo;
 
 ConnectionManager::ConnectionManager()
     : connections_()

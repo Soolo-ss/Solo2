@@ -13,7 +13,7 @@
 
 using boost::asio::ip::tcp;
 
-namespace Solo::Network
+namespace Solo
 {
     class Network
     {
