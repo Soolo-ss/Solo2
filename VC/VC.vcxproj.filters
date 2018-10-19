@@ -79,5 +79,8 @@
     <ClInclude Include="..\Threads\ThreadSafeQueue.h">
       <Filter>Threads</Filter>
     </ClInclude>
+    <ClInclude Include="..\Threads\ThreadSafeQueueByList.h">
+      <Filter>Threads</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

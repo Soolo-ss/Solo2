@@ -147,6 +147,7 @@
     <ClInclude Include="..\Network\ConnectionManager.h" />
     <ClInclude Include="..\Network\Network.h" />
     <ClInclude Include="..\Threads\ThreadSafeQueue.h" />
+    <ClInclude Include="..\Threads\ThreadSafeQueueByList.h" />
     <ClInclude Include="..\Threads\ThreadSafeStack.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
