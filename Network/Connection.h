@@ -8,6 +8,7 @@
 #include <boost/asio.hpp>
 
 #include <iostream>
+#include <memory>
 
 using boost::asio::ip::tcp;
 

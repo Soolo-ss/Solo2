@@ -76,5 +76,8 @@
     <ClInclude Include="..\Threads\ThreadSafeStack.h">
       <Filter>Threads</Filter>
     </ClInclude>
+    <ClInclude Include="..\Threads\ThreadSafeQueue.h">
+      <Filter>Threads</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
