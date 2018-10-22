@@ -3,17 +3,18 @@ project(Solo)
 
 set(CMAKE_CXX_STANDARD 11)
 
-set(SOURCE_FILES main.cpp)
+set(SOURCE_FILES main.cpp Threads/LockFreeStackByList.h)
 
 set(Boost_DEBUG 1)
-set(BOOST_ROOT "E:\\Boost\\boost_1_64_0")
+set(BOOST_ROOT "E:\\Code\\boost\\boost_1_68_0")
 
 if (WIN32)
 set(Boost_COMPILER "-vc141")
 endif()
 
-set(BOOST_LIBRARYDIR "E:\\Boost\\boost_1_64_0\\stage\\lib")
-find_package(Boost 1.64.0 COMPONENTS  thread regex system REQUIRED)
+set(BOOST_LIBRARYDIR "E:\\Code\\boost\\boost_1_68_0\\stage\\lib")
+#find_package(Boost 1.68.0 COMPONENTS  thread regex system REQUIRED)
+find_package(Boost 1.68.0)
 if(Boost_FOUND)
     add_definitions(-DBOOST_ERROR_CODE_HEADER_ONLY)
     add_definitions(-DBOOST_SYSTEM_NO_DEPRECATED)
@@ -26,6 +27,7 @@ add_subdirectory(./Test)
 
 add_executable(Solo ${SOURCE_FILES})
 add_executable(Test ${TEST_FILES})
+add_executable(Threads ${THREADS_FILES})
 
 if (Boost_FOUND)
     target_link_libraries(Solo ${Boost_THREAD_LIBRARY} ${Boost_SYSTEM_LIBRARY} ${Boost_REGEX_LIBRARY})
