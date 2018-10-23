@@ -6,14 +6,16 @@
 
 struct EmptyQueueByList : std::exception
 {
-	const char* what() const
+	const char* what() const noexcept
 	{
 		return "empty queue by list";
 	}
 };
 
 /*
-�̰߳�ȫ��ջ �������Ƚϴ� ���ܽϵ�
+线程安全的队列 锁的粒度较大  接口有待完善
+ 每个节点持有一个std::unique_ptr<QueueNode> 的设计，在队列析构时如果队列中持有大量节点的情况下，
+ 会导致递归得调用unique_ptr的析构函数， 并且耗尽栈空间。 注意
 */
 template <typename T>
 class ThreadSafeQueueByListV1
@@ -72,6 +74,11 @@ public:
 		std::unique_ptr<QueueNode> oldHead = std::move(head_);
 		head_ = std::move(oldHead->next);
 
+		if (!head_)
+		{
+			tail_ = nullptr;
+		}
+
 		return popone;
 	}
 
@@ -90,7 +97,7 @@ private:
 };
 
 /*
-�̰߳�ȫ��ջ �������� ���ܽϸ�
+�̰߳�ȫ��ջ �������� ���ܽϸ�
 */
 template <typename T>
 class ThreadSafeQueueByListV2

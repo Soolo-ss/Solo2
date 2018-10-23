@@ -23,9 +23,11 @@ endif()
 
 add_subdirectory(./Network)
 add_subdirectory(./Test)
+add_subdirectory(./Threads)
 
 add_executable(Solo ${SOURCE_FILES})
 add_executable(Test ${TEST_FILES})
+add_executable(Threads ${THREADS_FILES} Threads/SpinLockMutex.h Threads/LockFreeStackByList.h)
 
 if (Boost_FOUND)
     target_link_libraries(Solo ${Boost_THREAD_LIBRARY} ${Boost_SYSTEM_LIBRARY} ${Boost_REGEX_LIBRARY})
