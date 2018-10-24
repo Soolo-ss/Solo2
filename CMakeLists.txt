@@ -22,9 +22,12 @@ if(Boost_FOUND)
     link_directories(${Boost_LIBRARY_DIRS})
 endif()
 
+include_directories(./Libs/pybind11/include)
+
 add_subdirectory(./Network)
 add_subdirectory(./Test)
 add_subdirectory(./Threads)
+add_subdirectory(./Python)
 
 add_executable(Solo ${SOURCE_FILES})
 add_executable(Test ${TEST_FILES})
