@@ -3,7 +3,7 @@ project(Solo)
 
 set(CMAKE_CXX_STANDARD 11)
 
-set(SOURCE_FILES main.cpp Threads/LockFreeStackByList.h)
+set(SOURCE_FILES main.cpp Threads/LockFreeStackByList.h Algorithm/QuickSort.h)
 
 set(Boost_DEBUG 1)
 set(BOOST_ROOT "E:\\Boost\\boost_1_64_0")

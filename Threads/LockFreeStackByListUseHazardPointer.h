@@ -137,7 +137,7 @@ void DeleteReclaimDataWithNoHazard()
 
     while(current)
     {
-        
+
     }
 }
 

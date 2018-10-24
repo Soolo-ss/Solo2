@@ -53,12 +53,10 @@ namespace Solo
 	};
 
 	/*
-	a simple one
-	Ìæ´úV1°æ±¾ ´Ë°æ±¾Ã»ÓĞdata race
-	É¾³ıÁËtop Ìá¹©ÁËpop·µ»ØÖµ À´±ÜÃâv1°æ±¾µÄÎÊÌâ ¼´Í¬Ò»¸ö²Ù×÷·Ö¸îÎªÁ½¸öÔì³ÉÌõ¼ş¾ºÕùµÄÎÊÌâ
+	* a simple one threadsafe stack
 	*/
 	template<typename T>
-	class ThreadSafeStackV2
+	class ThreadSafeStack
 	{
 	public:
 		struct EmptyStack : std::exception
@@ -79,12 +77,12 @@ namespace Solo
 			return stack_.empty();
 		}
 
-		//·µ»ØÖÇÄÜÖ¸Õë ±ÜÃâ¿½±´¹¹Ôìº¯Êı¿ÉÄÜÅ×³öµÄÒì³£ Ôì³ÉstackÄÚÊı¾İ³ÉÔ±±»ÆÆ»µ
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ ï¿½ï¿½ï¿½â¿½ï¿½ï¿½ï¿½ï¿½ï¿½ìº¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×³ï¿½ï¿½ï¿½ï¿½ì³£ ï¿½ï¿½ï¿½stackï¿½ï¿½ï¿½ï¿½ï¿½İ³ï¿½Ô±ï¿½ï¿½ï¿½Æ»ï¿½
 		std::shared_ptr<T> pop()
 		{
 			std::lock_guard<std::mutex> lg(mutex_);
 
-			//Èç¹ûÎª¿Õ´ËÊ±Ö±½ÓÅ×³öÒì³£ ±ÜÃâV1°æ±¾µÄÌõ¼ş¾ºÕù
+			//ï¿½ï¿½ï¿½Îªï¿½Õ´ï¿½Ê±Ö±ï¿½ï¿½ï¿½×³ï¿½ï¿½ì³£ ï¿½ï¿½ï¿½ï¿½V1ï¿½æ±¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			if (stack_.empty())
 			{
 				throw EmptyStack();
