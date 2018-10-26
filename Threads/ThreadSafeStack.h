@@ -56,7 +56,7 @@ namespace Solo
 	* a simple one threadsafe stack
 	*/
 	template<typename T>
-	class ThreadSafeStack
+	class ThreadSafeStackV2
 	{
 	public:
 		struct EmptyStack : std::exception

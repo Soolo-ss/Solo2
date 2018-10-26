@@ -5,11 +5,11 @@ set(CMAKE_CXX_STANDARD 11)
 
 set(SOURCE_FILES main.cpp Threads/LockFreeStackByList.h Algorithm/QuickSort.h)
 
-set(Boost_DEBUG 1)
 set(BOOST_ROOT "E:\\Boost\\boost_1_64_0")
 
 if (WIN32)
 set(Boost_COMPILER "-vc141")
+add_definitions(-DMS_WIN64)
 endif()
 
 set(BOOST_LIBRARYDIR "E:\\Boost\\boost_1_64_0\\stage\\lib")
@@ -23,6 +23,7 @@ if(Boost_FOUND)
 endif()
 
 include_directories(./Libs/pybind11/include)
+include_directories(C://Python27//include)
 
 add_subdirectory(./Network)
 add_subdirectory(./Test)
@@ -31,7 +32,9 @@ add_subdirectory(./Python)
 
 add_executable(Solo ${SOURCE_FILES})
 add_executable(Test ${TEST_FILES})
-add_executable(Threads ${THREADS_FILES} Threads/LockFreeStackByListUseHazardPointer.h)
+add_executable(Threads ${THREADS_FILES} Threads/ThreadPoolV2.h.h)
+
+message(Threads)
 
 if (Boost_FOUND)
     target_link_libraries(Solo ${Boost_THREAD_LIBRARY} ${Boost_SYSTEM_LIBRARY} ${Boost_REGEX_LIBRARY})
