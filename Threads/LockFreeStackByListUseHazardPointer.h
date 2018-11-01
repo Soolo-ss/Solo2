@@ -137,7 +137,17 @@ void DeleteReclaimDataWithNoHazard()
 
     while(current)
     {
-        
+        ReclaimData* next = current->next;
+
+        if (CheckHazardPointer(next))
+        {
+            delete current;
+        }
+        else
+        {
+            AddToReclaimNodes(current);
+        }
+        current = next;
     }
 }
 
@@ -188,11 +198,15 @@ public:
             if (CheckHazardPointer(oldHead))
             {
                 //此时有其他线程持有这个节点 不能马上删除
+                ReclaimLater(oldHead);
             }
             else
             {
                 delete oldHead;
             }
+
+            //尝试删除所有没有被持有风险指针的节点
+            DeleteReclaimDataWithNoHazard();
         }
 
         return res;
