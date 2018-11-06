@@ -1,12 +1,15 @@
-#include "Algorithm/SelectionSort.h"
+#include "Algorithm/insertion_sort.h"
 
 #include <vector>
+#include <iostream>
 
 int main()
 {
-    std::vector<int> a { 3, 5, 3,123, 432, 32};
+    std::vector<int> a { 523, 222, 7, 7432, 32};
 
-    selection_sort(a.begin(), a.end());
+    merge_sort(a.begin(), a.end());
+
+    for(auto x : a) std::cout << x << " ";
 
     return 0;
 }
